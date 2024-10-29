@@ -21,6 +21,7 @@ jobs:
         with:
           images: dongjukim123/nodejs-ci
           tags: |
+            latest
             {{version}}
             {{major}}.{{minor}}
 
