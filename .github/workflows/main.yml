@@ -1,30 +1,39 @@
-name: CI
+name: Push Docker Image to Docker Hub
 
 on:
   push:
     branches:
-      - main
+      - 'main'
+    tags:
+      - '**'
 
 jobs:
-  build:
+  push:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Docker meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v2
+        uses: crazy-max/ghaction-docker-meta@v1
         with:
           images: dongjukim123/nodejs-ci
-          tags: |
-            latest
+          tag-semver: |
             {{version}}
             {{major}}.{{minor}}
 
-      - name: Print Tags
-        run: echo "${{ steps.docker_meta.outputs.tags }}"
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
       - name: Build and push Docker Image
         uses: docker/build-push-action@v4
@@ -33,5 +42,4 @@ jobs:
           push: true
           tags: |
             dongjukim123/nodejs-ci:latest
-            ${{ steps.docker_meta.outputs.tags }} 
           labels: ${{ steps.docker_meta.outputs.labels }}
