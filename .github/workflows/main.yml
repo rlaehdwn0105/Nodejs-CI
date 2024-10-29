@@ -21,7 +21,6 @@ jobs:
         with:
           images: dongjukim123/nodejs-ci
           tags: |
-            latest 
             {{version}}
             {{major}}.{{minor}}
 
@@ -43,6 +42,11 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ steps.docker_meta.outputs.tags }}  
+            ${{ steps.docker_meta.outputs.tags }}
             dongjukim123/nodejs-ci:latest
           labels: ${{ steps.docker_meta.outputs.labels }}
+
+      - name: Save state and set output using environment files
+        run: |
+          echo "MY_OUTPUT=some_value" >> $GITHUB_OUTPUT
+          echo "MY_STATE=some_state_value" >> $GITHUB_STATE
