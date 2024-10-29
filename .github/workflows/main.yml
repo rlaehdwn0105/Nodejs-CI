@@ -1,18 +1,16 @@
-name: Push Docker Image to Docker Hub
+name: CI
 
 on:
   push:
     branches:
-      - 'main'
-    tags:
-      - '**'
+      - main
 
 jobs:
-  push:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Docker meta
@@ -21,20 +19,12 @@ jobs:
         with:
           images: dongjukim123/nodejs-ci
           tags: |
+            latest
             {{version}}
             {{major}}.{{minor}}
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Print Tags
+        run: echo "${{ steps.docker_meta.outputs.tags }}"
 
       - name: Build and push Docker Image
         uses: docker/build-push-action@v4
@@ -42,10 +32,6 @@ jobs:
           context: .
           push: true
           tags: |
+            dongjukim123/nodejs-ci:latest
             ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
-
-      - name: Save state and set output using environment files
-        run: |
-          echo "MY_OUTPUT=some_value" >> $GITHUB_OUTPUT
-          echo "MY_STATE=some_state_value" >> $GITHUB_STATE
