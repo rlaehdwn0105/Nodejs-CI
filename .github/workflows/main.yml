@@ -13,13 +13,13 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  
 
       - name: Docker meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
+        uses: crazy-max/ghaction-docker-meta@v2  
         with:
-          images: dongjukim123/nodejs-ci 
+          images: dongjukim123/nodejs-ci
           tag-semver: |
             {{version}}
             {{major}}.{{minor}}
@@ -43,5 +43,5 @@ jobs:
           push: true
           tags: |
             ${{ steps.docker_meta.outputs.tags }}
-            dongjukim123/nodejs-ci:latest 
+            dongjukim123/nodejs-ci:latest
           labels: ${{ steps.docker_meta.outputs.labels }}
