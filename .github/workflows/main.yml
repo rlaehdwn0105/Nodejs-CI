@@ -19,7 +19,7 @@ jobs:
         id: docker_meta
         uses: crazy-max/ghaction-docker-meta@v1
         with:
-          images: dongjukim123/nodejs-ci #자신의 Docker Hub 정보로 수정 
+          images: dongjukim123/nodejs-ci 
           tag-semver: |
             {{version}}
             {{major}}.{{minor}}
@@ -43,5 +43,5 @@ jobs:
           push: true
           tags: |
             ${{ steps.docker_meta.outputs.tags }}
-            dongjukim123/nodejs-ci:latest  # 마지막 푸시된 이미지를 latest로 설정
+            dongjukim123/nodejs-ci:latest 
           labels: ${{ steps.docker_meta.outputs.labels }}
