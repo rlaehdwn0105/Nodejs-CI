@@ -33,5 +33,5 @@ jobs:
           push: true
           tags: |
             dongjukim123/nodejs-ci:latest
-            ${{ steps.docker_meta.outputs.tags }}
+            ${{ steps.docker_meta.outputs.tags }} 
           labels: ${{ steps.docker_meta.outputs.labels }}
