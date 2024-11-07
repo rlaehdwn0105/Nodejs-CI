@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_HUB_CREDENTIALS_ID = 'docker'  // Docker Hub 자격증명 ID
         GITHUB_CREDENTIALS_ID = 'github'  // GitHub 자격증명 ID
-        DOCKER_IMAGE = 'docker/nodejs-ci'  // Docker 이미지 이름
+        DOCKER_IMAGE = 'dongjukim123/nodejs-ci'  // Docker 이미지 이름
         IMAGE_TAG = 'latest'  // 원하는 이미지 태그
     }
 
