@@ -16,7 +16,7 @@ pipeline {
                     $class: 'GitSCM',
                     branches: [[name: '*/main']],
                     userRemoteConfigs: [[
-                        url: 'https://github.com/dongjucloud/nodejs-ci/tree/main',  // GitHub 저장소 URL로 대체
+                        url: 'https://github.com/dongjucloud/nodejs-ci',  // GitHub 저장소 URL로 대체
                         credentialsId: GITHUB_CREDENTIALS_ID
                     ]]
                 ])
